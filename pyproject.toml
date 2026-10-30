@@ -1,0 +1,31 @@
+[project]
+name = "ai-engineer"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest]
+addopts = ["-p", "pytest_asyncio"]
+asyncio_mode = "auto"
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-module-docstring",
+    "missing-function-docstring",
+    "missing-class-docstring",
+    "too-few-public-methods",
+]
+
+[tool.pylint.basic]
+good-names = ["i", "j", "k", "x", "y", "z", "ai", "uv"]
+
+[tool.pylint.formatting]
+max-line-length = 120
+
+[dependency-groups]
+dev = [
+    "pylint>=4.1.3",
+]

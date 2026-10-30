@@ -1,0 +1,42 @@
+# UV
+.venv/
+.python-version
+
+# Lock-файл UV — КОММИТИМ (для воспроизводимости CI)
+!uv.lock
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+*.egg
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Coverage
+htmlcov/
+.coverage
+
+# MCP / Secrets
+.env
+*.key
+secrets/

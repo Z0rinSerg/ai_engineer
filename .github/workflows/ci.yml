@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/**"  # чтобы CI запускался, если мы меняем сам workflow
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "pyproject.toml"
+      - ".github/workflows/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | bash
+
+      - name: Set up PATH for uv
+        shell: bash
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Sync dependencies
+        run: uv sync --frozen
+
+      - name: Run tests with coverage
+        run: uv run coverage run -m pytest tests/
+
+      - name: Show coverage report
+        run: uv run coverage report
+
+      - name: Generate HTML coverage
+        run: uv run coverage html
+        if: always()
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: htmlcov/
+
+      - name: Run Pylint
+        run: uv run pylint src/ai_engineer
